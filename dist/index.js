@@ -1,5 +1,5 @@
 "use strict";
 
-var word = "hello, world";
+var text = "hello, world";
 
-console.log(word);
+console.log(text);
