@@ -25,13 +25,14 @@ var app = (0, _express2.default)();
 
 app.set('port', process.env.PORT || 4000);
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
+app.use(line.middleware(config));
 app.use(_bodyParser2.default.json());
 
 app.get('/', function (req, res) {
 	res.send('Hello World!');
 });
 
-app.post('/webhook', line.middleware(config), function (req, res) {
+app.post('/webhook', function (req, res) {
 	// Promise
 	// 	.all(req.body.events.map(handleEvent))
 	// 	.then((result) => res.json(result));

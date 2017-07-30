@@ -11,13 +11,14 @@ const app = express();
 
 app.set('port', (process.env.PORT || 4000));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(line.middleware(config));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
 	res.send('Hello World!');
 });
 
-app.post('/webhook', line.middleware(config), (req, res) => {
+app.post('/webhook', (req, res) => {
 	// Promise
 	// 	.all(req.body.events.map(handleEvent))
 	// 	.then((result) => res.json(result));
