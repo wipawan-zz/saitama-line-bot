@@ -10,7 +10,9 @@ var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
 var _botSdk = require('@line/bot-sdk');
 
-var _botSdk2 = _interopRequireDefault(_botSdk);
+var line = _interopRequireWildcard(_botSdk);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28,6 +30,24 @@ app.use(_bodyParser2.default.json());
 app.get('/', function (req, res) {
 	res.send('Hello World!');
 });
+
+app.post('/webhook', line.middleware(config), function (req, res) {
+	Promise.all(req.body.events.map(handleEvent)).then(function (result) {
+		return res.json(result);
+	});
+});
+
+var client = new line.Client(config);
+function handleEvent(event) {
+	if (event.type !== 'message' || event.message.type !== 'text') {
+		return Promise.resolve(null);
+	}
+
+	return client.replyMessage(event.replyToken, {
+		type: 'text',
+		text: event.message.text
+	});
+}
 
 app.listen(app.get('port'), function () {
 	console.log('running at port ', app.get('port'));

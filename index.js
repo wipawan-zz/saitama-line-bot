@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import line from '@line/bot-sdk';
+import * as line from '@line/bot-sdk';
 
 const config = {
 	channelAccessToken: 'SIFQCOIEChz1CPzLZN+f6exWnaBua0p2TA07Xp0IgchO51CHg9zTS15UJAAYB/Vjiv1WrpMXYygCoIqq+IJXDPgQNC5q0P3RimsvNkLUFqVnl0xsUhuuzqxMHNdlgYTB/2zrxctqYdXi0lBweRwOkwdB04t89/1O/w1cDnyilFU=',
