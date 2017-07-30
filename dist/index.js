@@ -32,9 +32,10 @@ app.get('/', function (req, res) {
 });
 
 app.post('/webhook', line.middleware(config), function (req, res) {
-	Promise.all(req.body.events.map(handleEvent)).then(function (result) {
-		return res.json(result);
-	});
+	// Promise
+	// 	.all(req.body.events.map(handleEvent))
+	// 	.then((result) => res.json(result));
+	res.sendStatus(200);
 });
 
 var client = new line.Client(config);
