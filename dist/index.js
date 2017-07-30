@@ -28,15 +28,25 @@ app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use(line.middleware(config));
 app.use(_bodyParser2.default.json());
 
+app.use(function (err, req, res, next) {
+	if (err instanceof line.SignatureValidationFailed) {
+		res.status(401).send(err.signature);
+		return;
+	} else if (err instanceof JSONParseError) {
+		res.status(400).send(err.raw);
+		return;
+	}
+	next(err); //will throw default 400
+});
+
 app.get('/', function (req, res) {
 	res.send('Hello World!');
 });
 
 app.post('/webhook', function (req, res) {
-	// Promise
-	// 	.all(req.body.events.map(handleEvent))
-	// 	.then((result) => res.json(result));
-	res.sendStatus(200);
+	Promise.all(req.body.events.map(handleEvent)).then(function (result) {
+		return res.json(result);
+	});
 });
 
 var client = new line.Client(config);

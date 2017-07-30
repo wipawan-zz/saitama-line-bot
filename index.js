@@ -14,15 +14,25 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(line.middleware(config));
 app.use(bodyParser.json());
 
+app.use((err, req, res, next) => {
+	if (err instanceof line.SignatureValidationFailed) {
+		res.status(401).send(err.signature);
+		return;
+	} else if (err instanceof JSONParseError) {
+		res.status(400).send(err.raw);
+		return;
+	}
+	next(err); //will throw default 400
+});
+
 app.get('/', function(req, res) {
 	res.send('Hello World!');
 });
 
 app.post('/webhook', (req, res) => {
-	// Promise
-	// 	.all(req.body.events.map(handleEvent))
-	// 	.then((result) => res.json(result));
-	res.sendStatus(200);
+	Promise
+		.all(req.body.events.map(handleEvent))
+		.then((result) => res.json(result));
 });
 
 const client = new line.Client(config);
