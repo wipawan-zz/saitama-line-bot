@@ -22,7 +22,7 @@ app.use((err, req, res, next) => {
 		res.status(400).send(err.raw);
 		return;
 	}
-	next(err); //will throw default 400
+	next(err); //will throw default 500
 });
 
 app.get('/', function(req, res) {
@@ -48,9 +48,7 @@ function handleEvent(event) {
 		type: 'text',
 		text: event.message.text
 	}).catch(err => {
-		if (err instanceof HTTPError) {
-			console.log(err.statusCode);
-		}
+		console.log(err.statusCode);
 	});
 }
 
