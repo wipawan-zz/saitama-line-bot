@@ -1,6 +1,6 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import * as line from '@line/bot-sdk';
+const express = require('express');
+const bodyParser = require('body-parser');
+const line = require('@line/bot-sdk');
 
 const config = {
 	channelAccessToken: 'SIFQCOIEChz1CPzLZN+f6exWnaBua0p2TA07Xp0IgchO51CHg9zTS15UJAAYB/Vjiv1WrpMXYygCoIqq+IJXDPgQNC5q0P3RimsvNkLUFqVnl0xsUhuuzqxMHNdlgYTB/2zrxctqYdXi0lBweRwOkwdB04t89/1O/w1cDnyilFU=',
@@ -10,7 +10,6 @@ const config = {
 const app = express();
 
 app.set('port', (process.env.PORT || 4000));
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(line.middleware(config));
 app.use(bodyParser.json());
 
