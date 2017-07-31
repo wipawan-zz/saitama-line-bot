@@ -3,8 +3,8 @@ const bodyParser = require('body-parser');
 const line = require('@line/bot-sdk');
 
 const config = {
-	channelAccessToken: 'SIFQCOIEChz1CPzLZN+f6exWnaBua0p2TA07Xp0IgchO51CHg9zTS15UJAAYB/Vjiv1WrpMXYygCoIqq+IJXDPgQNC5q0P3RimsvNkLUFqVnl0xsUhuuzqxMHNdlgYTB/2zrxctqYdXi0lBweRwOkwdB04t89/1O/w1cDnyilFU=',
-	channelSecret: '51e5f7ec68e6f1e348a52674f37cc0f5'
+	channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+	channelSecret: process.env.CHANNEL_SECRET
 };
 
 const app = express();
