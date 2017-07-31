@@ -44,6 +44,10 @@ function handleEvent(event) {
 	return client.replyMessage(event.replyToken, {
 		type: 'text',
 		text: event.message.text
+	}).catch(err => {
+		if (err instanceof HTTPError) {
+			console.log(err.statusCode);
+		}
 	});
 }
 
