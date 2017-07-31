@@ -10,6 +10,7 @@ const config = {
 const app = express();
 
 app.set('port', (process.env.PORT || 4000));
+
 app.use(line.middleware(config));
 app.use(bodyParser.json());
 
@@ -31,7 +32,10 @@ app.get('/', function(req, res) {
 app.post('/webhook', (req, res) => {
 	Promise
 		.all(req.body.events.map(handleEvent))
-		.then((result) => res.json(result));
+		.then((result) => res.json(result))
+		.catch(err => {
+			console.log(err.message);
+		});
 });
 
 const client = new line.Client(config);
